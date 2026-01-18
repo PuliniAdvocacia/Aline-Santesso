@@ -193,7 +193,7 @@ export default function App() {
                <div className="absolute -inset-4 bg-rose-50 rounded-[4rem] -rotate-3 z-0"></div>
                <div className="relative z-10 aspect-[4/5] bg-slate-200 rounded-[3.5rem] overflow-hidden shadow-2xl border-4 border-white">
                   <img 
-                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800" 
+                    src="https://ibb.co/zVTRdD51" 
                     alt="Dra. Aline Santesso" 
                     className="w-full h-full object-cover"
                     loading="eager"
