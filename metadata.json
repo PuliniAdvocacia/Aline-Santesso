@@ -1,0 +1,7 @@
+{
+  "name": "Aline Santesso Pulini - Advocacia",
+  "description": "Site profissional para a Dra. Aline Santesso Pulini, especializada em Direito Imobiliário e de Família, com foco em atendimento humanizado e descomplicado.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
