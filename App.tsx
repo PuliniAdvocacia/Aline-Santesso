@@ -9,8 +9,7 @@ import {
   CheckCircle2,
   Plus,
   Minus,
-  HelpCircle,
-  Instagram
+  HelpCircle
 } from 'lucide-react';
 
 // Memoized static components for better performance
@@ -302,26 +301,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* Instagram CTA Section */}
-        <section className="py-24 bg-white reveal">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <a 
-              href="https://instagram.com/alinensantesso" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex flex-col items-center gap-4 group outline-none"
-            >
-              <div className="w-20 h-20 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-3xl flex items-center justify-center text-white shadow-xl group-hover:animate-[pulse-gentle_2s_infinite_ease-in-out] transition-transform duration-500 group-focus-visible:ring-4 group-focus-visible:ring-rose-200">
-                <Instagram size={40} aria-hidden="true" />
-              </div>
-              <span className="text-2xl md:text-4xl font-serif font-bold text-slate-800 tracking-tight">
-                Siga-me no <span className="text-rose-600 italic">Instagram!</span>
-              </span>
-              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-slate-400 group-hover:text-rose-500 transition-colors">@alinensantesso</span>
-            </a>
-          </div>
-        </section>
-
         {/* Contact Section - Updated without form */}
         <section id="contato" className="py-20 bg-slate-900 text-white relative overflow-hidden rounded-[4rem] mx-6 mb-12">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-rose-600/5 blur-[150px] pointer-events-none transform translate-z-0"></div>
@@ -376,13 +355,7 @@ export default function App() {
             <span className="text-slate-900 font-serif text-3xl font-black tracking-tight">ALINE SANTESSO</span>
             <p className="text-[10px] font-black text-rose-400 uppercase tracking-[0.8em]">Direito Imobiliário e Família</p>
           </div>
-          <nav className="flex gap-12 text-[11px] font-black uppercase tracking-[0.4em] text-slate-400">
-            <a href="https://instagram.com/alinensantesso" target="_blank" rel="noopener noreferrer" className="hover:text-rose-600 transition-colors flex items-center gap-2 outline-none focus-visible:text-rose-600" aria-label="Acessar Instagram">
-              <Instagram size={14} aria-hidden="true" /> Instagram
-            </a>
-            <span className="opacity-20" aria-label="Número da OAB">OAB/SP 497.122</span>
-          </nav>
-          <p className="text-[11px] text-slate-300 font-bold uppercase tracking-widest">© 2024 • Aline Santesso Pulini</p>
+          <p className="text-[11px] text-slate-300 font-bold uppercase tracking-widest">© 2026 • Aline Santesso Pulini</p>
         </div>
       </footer>
 
