@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Users, 
   ChevronRight,
@@ -11,8 +11,12 @@ import {
   Plus,
   Minus,
   HelpCircle,
-  Instagram
+  Instagram,
+  Send,
+  Loader2,
+  Check
 } from 'lucide-react';
+import { supabase } from './supabase';
 
 const WhatsAppLogo = ({ className = "w-5 h-5", color = "#25D366" }: { className?: string, color?: string }) => (
   <svg viewBox="0 0 24 24" className={className} style={{ fill: color }} role="img" aria-label="Ícone do WhatsApp">
@@ -21,6 +25,7 @@ const WhatsAppLogo = ({ className = "w-5 h-5", color = "#25D366" }: { className?
   </svg>
 );
 
+// Added key to props definition to resolve TypeScript error during component mapping
 const FAQItem = ({ question, answer }: { question: string, answer: string, key?: React.Key }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -39,6 +44,142 @@ const FAQItem = ({ question, answer }: { question: string, answer: string, key?:
           {answer}
         </p>
       </div>
+    </div>
+  );
+};
+
+const ContactForm = () => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: 'Imobiliário',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      // Nota: Assume que existe uma tabela 'leads' no Supabase com as colunas correspondentes
+      const { error } = await supabase
+        .from('leads')
+        .insert([
+          { 
+            name: formData.name, 
+            email: formData.email, 
+            phone: formData.phone, 
+            subject: formData.subject, 
+            message: formData.message,
+            created_at: new Date().toISOString()
+          }
+        ]);
+
+      if (error) throw error;
+      
+      setSuccess(true);
+      setFormData({ name: '', email: '', phone: '', subject: 'Imobiliário', message: '' });
+      setTimeout(() => setSuccess(false), 5000);
+    } catch (error) {
+      console.error('Erro ao enviar lead:', error);
+      alert('Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente via WhatsApp.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-white/5 backdrop-blur-sm rounded-[3rem] p-8 md:p-12 border border-white/10 shadow-2xl reveal">
+      {success ? (
+        <div className="flex flex-col items-center justify-center py-12 text-center space-y-4">
+          <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white mb-4 animate-bounce">
+            <Check size={40} />
+          </div>
+          <h4 className="text-2xl font-serif font-bold">Mensagem Enviada!</h4>
+          <p className="text-slate-400">Dra. Aline entrará em contato em breve.</p>
+          <button 
+            onClick={() => setSuccess(false)}
+            className="text-rose-400 text-sm font-bold uppercase tracking-widest pt-4 hover:underline"
+          >
+            Enviar outra mensagem
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-6 text-left">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-4">Nome Completo</label>
+              <input 
+                required
+                type="text" 
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                className="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-rose-500 outline-none transition-all placeholder:text-white/20"
+                placeholder="Seu nome"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-4">E-mail</label>
+              <input 
+                required
+                type="email" 
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                className="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-rose-500 outline-none transition-all placeholder:text-white/20"
+                placeholder="email@exemplo.com"
+              />
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-4">Telefone / WhatsApp</label>
+              <input 
+                required
+                type="tel" 
+                value={formData.phone}
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                className="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-rose-500 outline-none transition-all placeholder:text-white/20"
+                placeholder="(00) 00000-0000"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-4">Assunto</label>
+              <select 
+                value={formData.subject}
+                onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                className="w-full bg-slate-800 border border-white/20 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-rose-500 outline-none transition-all appearance-none"
+              >
+                <option value="Imobiliário">Direito Imobiliário</option>
+                <option value="Família">Direito de Família</option>
+                <option value="Sucessão">Inventário / Sucessão</option>
+                <option value="Outro">Outro Assunto</option>
+              </select>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <label className="text-[10px] uppercase font-black tracking-widest text-slate-400 ml-4">Como podemos ajudar?</label>
+            <textarea 
+              required
+              rows={4}
+              value={formData.message}
+              onChange={(e) => setFormData({...formData, message: e.target.value})}
+              className="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-4 focus:ring-2 focus:ring-rose-500 outline-none transition-all placeholder:text-white/20 resize-none"
+              placeholder="Descreva brevemente sua situação..."
+            />
+          </div>
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-rose-600 hover:bg-rose-700 disabled:bg-rose-800 text-white font-bold py-5 rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl shadow-rose-950/20 group"
+          >
+            {loading ? <Loader2 className="animate-spin" /> : <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+            {loading ? 'ENVIANDO...' : 'ENVIAR SOLICITAÇÃO'}
+          </button>
+        </form>
+      )}
     </div>
   );
 };
@@ -227,25 +368,6 @@ export default function App() {
                 Sou especialista em converter conflitos complexos em acordos seguros, priorizando a celeridade do <span className="text-slate-900 font-medium">Extrajudicial</span> e a preservação do patrimônio familiar através de uma assessoria totalmente personalizada.
               </p>
             </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-10 border-t border-rose-50 reveal">
-              <div className="space-y-2">
-                <h4 className="text-rose-600 font-bold text-2xl font-serif italic">Segurança</h4>
-                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Patrimonial</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-rose-600 font-bold text-2xl font-serif italic">Clareza</h4>
-                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Informação Jurídica</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-rose-600 font-bold text-2xl font-serif italic">Agilidade</h4>
-                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Via Extrajudicial</p>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-rose-600 font-bold text-2xl font-serif italic">Sigilo</h4>
-                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-widest">Relações Familiares</p>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -265,16 +387,6 @@ export default function App() {
               {faqs.map((faq, index) => (
                 <FAQItem key={index} question={faq.question} answer={faq.answer} />
               ))}
-            </div>
-            
-            <div className="mt-12 text-center reveal">
-              <p className="text-slate-400 text-sm mb-4">Ainda tem dúvidas específicas?</p>
-              <a 
-                href="https://wa.me/5517992116720" 
-                className="text-rose-600 font-bold uppercase tracking-widest text-[11px] hover:text-rose-700 transition-colors flex items-center justify-center gap-2 group"
-              >
-                Consultar via WhatsApp <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </a>
             </div>
           </div>
         </section>
@@ -302,38 +414,52 @@ export default function App() {
         {/* Contact Section */}
         <section id="contato" className="py-20 bg-slate-900 text-white relative overflow-hidden rounded-[4rem] mx-6 mb-12">
           <div className="absolute top-0 right-0 w-1/2 h-full bg-rose-600/5 blur-[150px] pointer-events-none"></div>
-          <div className="max-w-6xl mx-auto px-10 text-center">
-            <div className="max-w-3xl mx-auto space-y-12">
+          <div className="max-w-6xl mx-auto px-10 text-center relative z-10">
+            <div className="max-w-4xl mx-auto space-y-16">
               <header className="space-y-6 reveal">
                 <h3 className="text-5xl md:text-6xl font-serif leading-tight">Consulte uma advogada <br /> de sua <span className="text-rose-400 italic font-normal">confiança.</span></h3>
-                <p className="text-slate-400 text-xl font-light">Regularize seus bens e proteja o futuro da sua família com auxílio profissional.</p>
+                <p className="text-slate-400 text-xl font-light">Agende uma consultoria ou deixe sua mensagem abaixo para regularizar seu patrimônio.</p>
               </header>
               
-              <div className="grid md:grid-cols-2 gap-8 reveal">
-                <a 
-                  href="https://wa.me/5517992116720" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex flex-col items-center gap-6 p-10 bg-white/5 rounded-[3rem] border border-white/10 hover:bg-[#25D366] transition-all group shadow-2xl"
-                  aria-label="Link direto para o WhatsApp da Dra. Aline Santesso"
-                >
-                  <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <WhatsAppLogo className="w-10 h-10 text-white" color="white" />
+              <div className="grid lg:grid-cols-5 gap-12">
+                {/* Contact Info */}
+                <div className="lg:col-span-2 space-y-8">
+                  <a 
+                    href="https://wa.me/5517992116720" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-6 p-8 bg-white/5 rounded-3xl border border-white/10 hover:bg-[#25D366] transition-all group reveal-left"
+                  >
+                    <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <WhatsAppLogo className="w-8 h-8 text-white" color="white" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 group-hover:text-white/80">WhatsApp</p>
+                      <p className="text-xl font-bold mt-1">(17) 99211-6720</p>
+                    </div>
+                  </a>
+                  
+                  <div className="flex items-center gap-6 p-8 bg-white/5 rounded-3xl border border-white/10 reveal-left">
+                    <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-rose-400">
+                      <Mail size={32} aria-hidden="true" />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">E-mail Profissional</p>
+                      <p className="text-sm font-medium opacity-80 mt-1 break-all">alinesantesso@adv.oabsp.org.br</p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-slate-500 group-hover:text-white/80">WhatsApp</p>
-                    <p className="text-3xl font-bold tracking-tighter mt-2">(17) 99211-6720</p>
+
+                  <div className="p-8 bg-rose-500/10 rounded-3xl border border-rose-500/20 reveal-left">
+                    <p className="text-sm text-rose-200 leading-relaxed italic">
+                      "Meu compromisso é com a clareza e a proteção dos seus direitos. Cada caso é tratado com exclusividade."
+                    </p>
+                    <p className="mt-4 font-serif font-bold text-white">— Dra. Aline Santesso</p>
                   </div>
-                </a>
-                
-                <div className="flex flex-col items-center gap-6 p-10 bg-white/5 rounded-[3rem] border border-white/10">
-                  <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center text-rose-400">
-                    <Mail size={40} aria-hidden="true" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-[11px] font-black uppercase tracking-[0.4em] text-slate-500">E-mail Profissional</p>
-                    <p className="text-lg font-medium opacity-80 mt-2">alinesantesso@adv.oabsp.org.br</p>
-                  </div>
+                </div>
+
+                {/* Form Integration */}
+                <div className="lg:col-span-3">
+                  <ContactForm />
                 </div>
               </div>
             </div>
@@ -358,7 +484,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Floating CTA for Conversion */}
+      {/* Floating CTA */}
       <a 
         href="https://wa.me/5517992116720" 
         className="fixed bottom-8 right-8 z-[999] bg-[#25D366] text-white p-6 rounded-full shadow-[0_30px_60px_rgba(37,211,102,0.4)] hover:scale-110 active:scale-95 transition-all group"
