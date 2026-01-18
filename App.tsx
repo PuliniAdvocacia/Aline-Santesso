@@ -191,7 +191,7 @@ export default function App() {
                <div className="absolute -inset-4 bg-rose-50 rounded-[4rem] -rotate-3 z-0"></div>
                <div className="relative z-10 aspect-[4/5] bg-slate-200 rounded-[3.5rem] overflow-hidden shadow-2xl border-4 border-white">
                   <img 
-                    src="https://i.postimg.cc/TPvcGGCd/Whats-App-Image-2026-01-18-at-18-24-31.jpg" 
+                    src="https://i.postimg.cc/pdMBxxqR/Whats-App-Image-2026-01-18-at-18-23-27.jpg" 
                     alt="Dra. Aline Santesso" 
                     className="w-full h-full object-cover"
                     loading="eager"
@@ -247,7 +247,7 @@ export default function App() {
             <div className="md:col-span-2 reveal">
                <div className="relative aspect-[4/5] bg-rose-50 rounded-[3rem] overflow-hidden group shadow-lg">
                   <img 
-                    src="https://i.postimg.cc/pdMBxxqR/Whats-App-Image-2026-01-18-at-18-23-27.jpg" 
+                    src="https://i.postimg.cc/TPvcGGCd/Whats-App-Image-2026-01-18-at-18-24-31.jpg" 
                     alt="Escritório de Advocacia" 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
