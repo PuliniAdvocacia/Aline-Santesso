@@ -4,30 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aline Santesso | Advogada Direito Imobiliário e Família OAB/SP 497.122</title>
-    <meta name="description" content="Advocacia especializada em Direito Imobiliário e de Família. Atuação em regularização de imóveis, inventários, divórcios e planejamento sucessório. Dra. Aline Santesso, OAB/SP 497.122.">
-    <meta name="keywords" content="advogada, direito imobiliário, direito de família, aline santesso, regularização de imóveis, inventário, divórcio, oab sp 497122, usucapião, planejamento sucessório">
+    <meta name="description" content="Advocacia especializada em Direito Imobiliário e de Família. Dra. Aline Santesso, OAB/SP 497.122.">
     <meta name="author" content="Aline Santesso">
     
-    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://esm.sh" crossorigin>
-    <link rel="dns-prefetch" href="https://ejtfaeabhthdnhagqwqr.supabase.co">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://alinesantesso.adv.br/">
-    <meta property="og:title" content="Aline Santesso | Advogada Direito Imobiliário e Família">
-    <meta property="og:description" content="Assessoria jurídica estratégica para proteção do seu patrimônio e das suas relações familiares.">
-    <meta property="og:image" content="https://alinesantesso.adv.br/og-image.jpg">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Aline Santesso | Advogada Direito Imobiliário e Família">
-    <meta property="twitter:description" content="Assessoria jurídica estratégica para proteção do seu patrimônio e das suas relações familiares.">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -36,7 +21,6 @@
             background-color: #ffffff;
             color: #1e293b;
             overflow-x: hidden;
-            /* Prevents flash of unstyled content */
             opacity: 0;
             transition: opacity 0.4s ease-in;
         }
@@ -46,74 +30,45 @@
         .font-serif {
             font-family: 'Playfair Display', serif;
         }
-        .text-rose-glow {
-            color: #e11d48;
-            text-shadow: 0 0 10px rgba(225, 29, 72, 0.1);
-        }
-        .bg-rose-soft {
-            background-color: #fff1f2;
-        }
-        ::selection {
-            background: #fecdd3;
-            color: #881337;
-        }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #ffffff; }
-        ::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 4px; }
         
-        /* Scroll Reveal Animations - Optimized with hardware acceleration */
         .reveal, .reveal-left {
             opacity: 0;
             will-change: transform, opacity;
             transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        
         .reveal { transform: translateY(30px); }
         .reveal-left { transform: translateX(-30px); }
-        
         .reveal.active, .reveal-left.active {
             opacity: 1;
             transform: translate(0, 0);
         }
 
-        /* Focus visibility improvements */
-        :focus-visible {
-            outline: 2px solid #e11d48;
-            outline-offset: 4px;
-        }
-
-        /* Form Loading Spinner */
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-            animation: spin 3s linear infinite;
-        }
-
-        /* Pulse animation for Instagram CTA */
         @keyframes pulse-gentle {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
     </style>
-<script type="importmap">
+
+    <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.462.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
-    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.45.1"
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.90.1"
   }
 }
 </script>
 </head>
 <body class="antialiased">
     <div id="root"></div>
+    <!-- Referência correta para .tsx para o transpiler do preview -->
+    <script type="module" src="./index.tsx"></script>
     <script>
-        // Reveal body after critical styles and script start
         window.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('loaded');
         });
